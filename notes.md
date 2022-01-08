@@ -1,0 +1,2 @@
+4. Get a NodeList reference of all the buttons in the document and turn it into a list.Add eventListeners to buttons and modify display div textContent with the value of the button pressed 
+//TODO figure out best way to store display value

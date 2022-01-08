@@ -1,6 +1,4 @@
 body{
-    margin: 0;
-    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,34 +6,80 @@ body{
 .main-layout{
     box-sizing: border-box;
     background-color: black;
+    border-right: solid 15px gray;
+    border-bottom: solid 15px gray;
     border-radius: 5px;
     padding: 20px;
     
     display: flex;
     flex-flow: column;
-    min-height: 700px;
+    min-height: 600px;
     min-width: 500px;
 }
 
 .display{
+    color: white;
+    font-size: 30px;
+    font-weight: bolder;
     border-bottom: solid 2px grey;
-
+    height: 100px;
+    
     display: flex;
-    height: 200px;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
 .buttons{
     height: 100%;
     margin:20px;
+    gap: 5px;
 
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    align-items: stretch;
     flex:1 1 auto;
-    
 }
 
-.row-one,.row-two,.row-three,.row-four,.row-five{
+.row-one,
+.row-two,
+.row-three,
+.row-four,
+.row-five{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+button{
+    height: 90px;
+    width: 90px;
+    box-sizing: border-box;
+    background-color: rgb(27, 27, 27);
+    color: white;
+    font-size: xx-large;
+    font-weight: 900;
+    border:solid 0.1px rgb(0, 0, 0) ;
+    border-radius: 50%;
+    padding: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button.clear-button{
+    color: red;
+}
+button.bracket-button,
+button.bracket-button,
+button.percentage-button,
+button.divide-button,
+button.substract-button,
+button.multiply-button,
+button.add-button{
+    color: greenyellow;
+}
+button.equals-button{
+    background-color: rgb(126, 170, 60);
 }
