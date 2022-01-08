@@ -1,0 +1,41 @@
+body{
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-layout{
+    box-sizing: border-box;
+    background-color: black;
+    border-radius: 5px;
+    padding: 20px;
+    
+    display: flex;
+    flex-flow: column;
+    min-height: 700px;
+    min-width: 500px;
+}
+
+.display{
+    border-bottom: solid 2px grey;
+
+    display: flex;
+    height: 200px;
+}
+
+.buttons{
+    height: 100%;
+    margin:20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex:1 1 auto;
+    
+}
+
+.row-one,.row-two,.row-three,.row-four,.row-five{
+    display: flex;
+    justify-content: space-evenly;
+}
