@@ -3,7 +3,8 @@
     -Add different type of eventListeners depending on the button's behaviour  
         -xAdd eventListeners to .num-buttons(brackets and decimal included) and modify display div textContent with the value of the button pressed 
         -xAdd eventListener to .clear-button
-        -Add eventListeners to .op-button (if operator is clicked, store number)
+        -Add eventListeners to .op-button (check which operation has to be applied with checkOperator)
+
         -Add eventListeners to .equals-button
         
     //TODO figure out best way to store display value(narrow it down to 2 numbers first)
