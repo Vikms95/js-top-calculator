@@ -72,12 +72,8 @@ button.clear-button{
     color: red;
 }
 button.bracket-button,
-button.bracket-button,
 button.percentage-button,
-button.divide-button,
-button.substract-button,
-button.multiply-button,
-button.add-button{
+.op-button{
     color: greenyellow;
 }
 button.equals-button{
