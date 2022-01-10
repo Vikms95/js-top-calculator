@@ -4,8 +4,11 @@
         -Add eventListener to .clear-button
         -Add eventListeners to .op-button (create one function as display and a second to store the sum and assign everything properly)
         -Add eventListeners to .equals-button
+        
 
-    1.**storedTotalValue** Have an internal variable sum all operations until *=* is clicked 
-    2. **(.display-sum)** Have an int value point at **displayReference.textContent* to show the current number typed + the *operator* clicked which when *operator* or *=* is clicked turns into *storedTotalValue*
+    1.**totalValue** Have an internal variable sum all operations until *=* is clicked 
+    2. **(.display-sum)** Have an int value point at **displayReference.textContent* to show the current number typed + the *operator* clicked which when *operator* or *=* is clicked turns into *totalValue*
     3.**(.display-log)** Have a *string* value display the operations to *display.log*
     
+    -Store operator when clicked, and when next is clicked, apply next operator and store the clicked one
+    -operand2 is not properly catched when the number has zeroes on the right
