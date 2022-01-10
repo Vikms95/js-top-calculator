@@ -17,12 +17,24 @@ body{
     min-width: 500px;
 }
 
-.display{
+.display-log{
     color: white;
     font-size: 30px;
     font-weight: bolder;
     border-bottom: solid 2px grey;
-    height: 100px;
+    height: 50px;
+    
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.display-sum{
+    color: white;
+    font-size: 30px;
+    font-weight: bolder;
+    border-bottom: solid 2px grey;
+    height: 50px;
     
     display: flex;
     justify-content: flex-end;
@@ -52,9 +64,11 @@ body{
 }
 
 button{
+    cursor: pointer;
     height: 90px;
     width: 90px;
     box-sizing: border-box;
+    box-shadow: 0 1px rgb(27, 27, 27);
     background-color: rgb(27, 27, 27);
     color: white;
     font-size: xx-large;
@@ -67,6 +81,14 @@ button{
     justify-content: center;
     align-items: center;
 }
+
+button:hover {background-color: #6b6b6b}
+
+button:active {
+    background-color: #616161;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
 
 button.clear-button{
     color: red;

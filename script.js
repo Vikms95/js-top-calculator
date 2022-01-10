@@ -1,17 +1,17 @@
 function add(operand1,operand2){
-    return operand1 + operand2;
+    return (+operand1) + (+operand2);
 }
 
 function substract(operand1,operand2){
-    return operand1 - operand2;
+    return (+operand1) - (+operand2);
 }
 
 function multiply(operand1,operand2){
-    return operand1 * operand2;
+    return (+operand1) * (+operand2);
 }
 
 function divide(operand1,operand2){
-    return operand1 / operand2; 
+    return (+operand1) / (+operand2); 
 }
 
 function operate(operator,operand1,operand2) {
@@ -19,74 +19,81 @@ function operate(operator,operand1,operand2) {
 }
 
 function checkOperator(operatorTextReference) {
-    let operatorFunction;
     switch (operatorTextReference) {
-        case "+":
-            operatorFunction = add.name;
+        case "+": 
+            return add;
         case "-":
-            operatorFunction = substract.name;
+            return substract;
         case "*":
-            operatorFunction = multiply.name;
+            return multiply;
         case "/":
-            operatorFunction = divide.name;
+            return divide;
         default:
+            "hi"
             break;
     }
-    return operatorFunction;
 }
 
-function isFirstOperation(displayTotalValue){
-    return displayTotalValue == 0 ? true : false;
+function isFirstOperation(storedTotalValue){
+    return storedTotalValue == undefined ? true : false;
 }
 
-function addListenerNumButton (buttonReferenceNumNodeList,displayReference){
+function addListenerNumButton(buttonReferenceNumNodeList,displayReference){
     for (let i = 0; i < buttonReferenceNumNodeList.length; i++) {
-        buttonReferenceNumNodeList[i].addEventListener("click", (e) =>{
-        displayReference.textContent += e.target.textContent;
+        buttonReferenceNumNodeList[i].addEventListener("click", (event) =>{
+        displayReference.textContent += event.target.textContent;
         })
     };
 }
 
-function addListenerClearButton(buttonReferenceClear,displayReference){
-        buttonReferenceClear.addEventListener("click", () => {
-        displayReference.textContent = "";
-        displayTotalValue = 0;
-    })
-}
+function clearSum(){
+    displayReferenceSum.textContent = '';
+    storedTotalValue = undefined;
+    operand1 = undefined;
+    operand2 = undefined;
+    console.log("storedtotalvalue after clear " + storedTotalValue)
 
-function addListenerOpButton(buttonReferenceOpNodeList,displayReference,displayTotalValue,displayOperand1,displayOperand2){
-        
+};
+
+function addListenerClearButton(buttonReferenceClear){
+    buttonReferenceClear.addEventListener("click", () => {
+        clearSum()
+    });
+};
+
+function addListenerOpButton(buttonReferenceOpNodeList,displayReferenceSum){ 
     for (let i = 0; i < buttonReferenceOpNodeList.length; i++) {
-        buttonReferenceOpNodeList[i].addEventListener("click", (e) => {
-            if(isFirstOperation(displayTotalValue)){
-                displayTotalValue = displayReference.textContent;
+        buttonReferenceOpNodeList[i].addEventListener("click", (event) => {
+            console.log("storedtotalvalue before cond " + storedTotalValue)
+            if(isFirstOperation(storedTotalValue)){
+                console.log("first!")
+                storedTotalValue = displayReferenceSum.textContent;
+                displayReferenceSum.textContent = storedTotalValue + event.target.textContent;  
             }
             else
             {
-                displayOperand1 = displayTotalValue;
-                displayOperand2 = displayReference.textContent;
-                displayTotalValue = operate(checkOperator(e.target.textContent),displayOperand1,displayOperand2)
-            }
-            console.log(displayOperand1);
-            console.log(displayOperand2);
-            console.log(displayTotalValue);
+                console.log("not first!")
+                let functionToCall = checkOperator(event.target.textContent);
+                operand1 = parseInt(storedTotalValue)
+                operand2 = parseInt(displayReferenceSum.textContent.split("").reverse().join(""));
+                storedTotalValue = operate(functionToCall,operand1,operand2);
+                displayReferenceSum.textContent = storedTotalValue + event.target.textContent;
+                console.log("storedtotalvalue after op " + storedTotalValue)
+            }    
         });
-    };
+    }; 
 };
 
-function pageBoot(){
+const buttonReferenceNum = document.querySelectorAll(".num-button");
+const buttonReferenceOp = document.querySelectorAll(".op-button");
+const buttonReferenceClear = document.querySelector(".clear-button");
+const displayReferenceLog = document.querySelector(".display-log");
+const displayReferenceSum = document.querySelector(".display-sum");
+let operand1;
+let operand2;
+let storedTotalValue;
 
-    const buttonReferenceNum = document.querySelectorAll(".num-button");
-    const buttonReferenceOp = document.querySelectorAll(".op-button");
-    const buttonReferenceClear = document.querySelector(".clear-button");
-    const displayReference = document.querySelector(".display");
-    let displayOperand1 = 0;
-    let displayOperand2 = 0;
-    let displayTotalValue = 0;
-
-    addListenerNumButton(buttonReferenceNum,displayReference);
-    addListenerClearButton(buttonReferenceClear,displayReference);
-    addListenerOpButton(buttonReferenceOp,displayReference,displayTotalValue,displayOperand1 ,displayOperand2)
-};
-
-pageBoot();
+addListenerNumButton(buttonReferenceNum,displayReferenceSum,storedTotalValue);
+addListenerClearButton(buttonReferenceClear,displayReferenceSum,storedTotalValue);
+addListenerOpButton(buttonReferenceOp,displayReferenceSum,storedTotalValue)
+console.log()
