@@ -19,14 +19,16 @@ body{
 
 .display-log{
     color: white;
-    font-size: 30px;
-    font-weight: bolder;
+    font-size: 15px;
     border-bottom: solid 2px grey;
-    height: 50px;
+    height: 45px;
+
+    overflow: hidden;
+    max-width:29em;
     
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .display-sum{
@@ -34,11 +36,14 @@ body{
     font-size: 30px;
     font-weight: bolder;
     border-bottom: solid 2px grey;
-    height: 50px;
+
     gap: 5px;
+    overflow: hidden;
+    text-overflow: clip;
     
     display: flex;
     flex-direction: row;
+    max-width: 14em;
     justify-content: flex-end;
     align-items: flex-end;
 }
@@ -46,17 +51,6 @@ body{
 .display-operator{
     color: white;
     font-size: 30px;
-    height: 50px;
-    
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
-.display-log{
-    color: white;
-    font-size: 20px;
     height: 50px;
     
     display: flex;

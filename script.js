@@ -29,7 +29,6 @@ function checkOperator(operatorTextReference) {
         case "/":
             return divide;
         default:
-            "hi"
             break;
     }
 }
@@ -42,6 +41,13 @@ function isZeroDivision (functionToCall){
     if(functionToCall === divide){
         return operand1 && operand2 === 0 ? true : false;
     } 
+}
+
+function handleDivisionError(){
+    displayReferenceOp.textContent =  "";
+    displayReferenceNum.textContent = " ERROR: Division by 0 ";
+    setTimeout(clearSum,2000);
+    return;
 }
 
 function addItemToLog(displayReferenceLog,event){
@@ -78,33 +84,49 @@ function addListenerClearButton(buttonReferenceClear){
 function addListenerOpButton(buttonReferenceOpNodeList,displayReferenceNum){ 
     for (let i = 0; i < buttonReferenceOpNodeList.length; i++) {
         buttonReferenceOpNodeList[i].addEventListener("click", (event) => {
-            console.log("totalValue before cond " + totalValue);
+            // console.log("totalValue before cond " + totalValue);
             if(isFirstOperation(totalValue)){
                 totalValue = displayReferenceNum.textContent;
+                // console.log("totalvalue after pressing op first time " + totalValue)
                 storedOperator = event.target.textContent;
-                displayReferenceNum.textContent = totalValue;  
                 displayReferenceOp.textContent = event.target.textContent;
                 displayReferenceLog.textContent +=  " " + event.target.textContent + " ";
                 displayReferenceNum.textContent = "";
             }
             else
-            {
-                let functionToCall = checkOperator(storedOperator);
+            {   
+                let functionToCall;
+                if(storedOperator === "="){
+                    functionToCall = checkOperator(event.target.textContent);
+                }
+                else
+                {   
+                    functionToCall = checkOperator(storedOperator);
+                }
+                
                 operand1 = parseInt(totalValue)
                 operand2 = parseInt(displayReferenceNum.textContent);
+
+                //Check for 0 value inside the operators if functionToCall is a division
                 if(isZeroDivision(functionToCall)){
-                    displayReferenceNum.textContent = "ERROR: Division by 0";
-                    setTimeout(clearSum,2000);
+                    handleDivisionError();
                     return;
                 }
+
+                //Check for NaN value inside the operators
+                if(operand2 !== operand2 || operand1 !== operand1){
+                    totalValue = operate(functionToCall,totalValue,totalValue);
+                    displayReferenceOp.textContent = "";
+                    displayReferenceNum.textContent = totalValue;
+                    return;
+                }
+
                 totalValue = operate(functionToCall,operand1,operand2);
-                displayReferenceNum.textContent = totalValue;
                 storedOperator = event.target.textContent;
                 displayReferenceOp.textContent = storedOperator;
                 displayReferenceLog.textContent +=  " " + event.target.textContent + " ";
                 displayReferenceNum.textContent = "";
-                // console.log("stored operator is " + storedOperator)
-                // console.log("totalValue after op " + totalValue)
+
             }    
         });
     }; 
@@ -113,25 +135,32 @@ function addListenerOpButton(buttonReferenceOpNodeList,displayReferenceNum){
 function addListenerEqualButton(buttonReferenceEqual,displayReferenceNum){
     buttonReferenceEqual.addEventListener("click", () =>{
         if(isFirstOperation(totalValue)){
+            console.log("do not press equals without numbers!")
             displayReferenceNum.textContent = totalValue;
         }
         else
-        {
+        {   
             let functionToCall = checkOperator(storedOperator);
             operand1 = parseInt(totalValue)
             operand2 = parseInt(displayReferenceNum.textContent);
+
             if(isZeroDivision(functionToCall)){
+                handleDivisionError();
+                return;
+            }
+            if(operand2 !== operand2 || operand1 !== operand1){
+                totalValue = operate(functionToCall,totalValue,totalValue);
                 displayReferenceOp.textContent = "";
-                displayReferenceNum.textContent = "ERROR: Division by 0";
-                setTimeout(clearSum,2000);
+                displayReferenceNum.textContent = totalValue;
                 return;
             }
             totalValue = operate(functionToCall,operand1,operand2);
-            displayReferenceNum.textContent = totalValue;
+            storedOperator = "=";
             displayReferenceOp.textContent = "";
-            // console.log("stored operator is " + storedOperator)
-            // console.log("totalValue after op " + totalValue)
+            displayReferenceNum.textContent = totalValue;
+            
 
+            
         }
     });
 };
