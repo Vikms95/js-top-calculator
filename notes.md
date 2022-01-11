@@ -27,6 +27,9 @@ EDGE-CASES TO HANDLE:
 
 (X) - Clicking equals button right after operator should return *totalValue* (previousOperator) total value: check for NaN by comparing the operands with themselves(NaN value is the only one unequal to itself)
 
+- Disable operators after clicking one, and do not enable until a number is clicked
+
+- Create alerts when incompatible operations happen (division by 0, operators are not a number)
 
 - Clicking an operator right after equals button:
 
@@ -47,3 +50,7 @@ INSTRUCTIONS CHECKLIST
 6.5 X
 6.6 X
 
+totalValue = operate(operator, operand1,operand2));
+addListenerNumButton  > populate Sum,Log and store number in lastOperandUsed
+
+operate with lastOperandUsed + totalValue
