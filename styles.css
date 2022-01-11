@@ -35,10 +35,34 @@ body{
     font-weight: bolder;
     border-bottom: solid 2px grey;
     height: 50px;
+    gap: 5px;
     
     display: flex;
+    flex-direction: row;
     justify-content: flex-end;
     align-items: flex-end;
+}
+
+.display-operator{
+    color: white;
+    font-size: 30px;
+    height: 50px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.display-log{
+    color: white;
+    font-size: 20px;
+    height: 50px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .buttons{
