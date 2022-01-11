@@ -38,6 +38,12 @@ function isFirstOperation(totalValue){
     return totalValue == undefined ? true : false;
 }
 
+function isZeroDivision (functionToCall){
+    if(functionToCall === divide){
+        return operand1 && operand2 === 0 ? true : false;
+    } 
+}
+
 function addItemToLog(displayReferenceLog,event){
     displayReferenceLog.textContent += event.target.textContent;
 }
@@ -74,7 +80,6 @@ function addListenerOpButton(buttonReferenceOpNodeList,displayReferenceNum){
         buttonReferenceOpNodeList[i].addEventListener("click", (event) => {
             console.log("totalValue before cond " + totalValue);
             if(isFirstOperation(totalValue)){
-                console.log("first!")
                 totalValue = displayReferenceNum.textContent;
                 storedOperator = event.target.textContent;
                 displayReferenceNum.textContent = totalValue;  
@@ -84,18 +89,22 @@ function addListenerOpButton(buttonReferenceOpNodeList,displayReferenceNum){
             }
             else
             {
-                console.log("not first!")
                 let functionToCall = checkOperator(storedOperator);
                 operand1 = parseInt(totalValue)
                 operand2 = parseInt(displayReferenceNum.textContent);
+                if(isZeroDivision(functionToCall)){
+                    displayReferenceNum.textContent = "ERROR: Division by 0";
+                    setTimeout(clearSum,2000);
+                    return;
+                }
                 totalValue = operate(functionToCall,operand1,operand2);
                 displayReferenceNum.textContent = totalValue;
                 storedOperator = event.target.textContent;
                 displayReferenceOp.textContent = storedOperator;
                 displayReferenceLog.textContent +=  " " + event.target.textContent + " ";
                 displayReferenceNum.textContent = "";
-                console.log("stored operator is " + storedOperator)
-                console.log("totalValue after op " + totalValue)
+                // console.log("stored operator is " + storedOperator)
+                // console.log("totalValue after op " + totalValue)
             }    
         });
     }; 
@@ -111,15 +120,23 @@ function addListenerEqualButton(buttonReferenceEqual,displayReferenceNum){
             let functionToCall = checkOperator(storedOperator);
             operand1 = parseInt(totalValue)
             operand2 = parseInt(displayReferenceNum.textContent);
+            if(isZeroDivision(functionToCall)){
+                displayReferenceOp.textContent = "";
+                displayReferenceNum.textContent = "ERROR: Division by 0";
+                setTimeout(clearSum,2000);
+                return;
+            }
             totalValue = operate(functionToCall,operand1,operand2);
             displayReferenceNum.textContent = totalValue;
             displayReferenceOp.textContent = "";
-            console.log("stored operator is " + storedOperator)
-            console.log("totalValue after op " + totalValue)
+            // console.log("stored operator is " + storedOperator)
+            // console.log("totalValue after op " + totalValue)
 
         }
     });
 };
+
+
 
 const buttonReferenceNum = document.querySelectorAll(".num-button");
 const buttonReferenceOp = document.querySelectorAll(".op-button");
