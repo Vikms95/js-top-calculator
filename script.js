@@ -84,10 +84,11 @@ function addListenerClearButton(buttonReferenceClear){
 function addListenerOpButton(buttonReferenceOpNodeList,displayReferenceNum){ 
     for (let i = 0; i < buttonReferenceOpNodeList.length; i++) {
         buttonReferenceOpNodeList[i].addEventListener("click", (event) => {
-            // console.log("totalValue before cond " + totalValue);
+            console.log("totalValue before cond " + totalValue);
             if(isFirstOperation(totalValue)){
+                console.log("first operation!")
                 totalValue = displayReferenceNum.textContent;
-                // console.log("totalvalue after pressing op first time " + totalValue)
+                console.log("totalvalue after pressing op first time " + totalValue)
                 storedOperator = event.target.textContent;
                 displayReferenceOp.textContent = event.target.textContent;
                 displayReferenceLog.textContent +=  " " + event.target.textContent + " ";
@@ -96,32 +97,35 @@ function addListenerOpButton(buttonReferenceOpNodeList,displayReferenceNum){
             else
             {   
                 let functionToCall;
-                if(storedOperator === "="){
+                
+                if(storedOperator === "=")
+                {
                     functionToCall = checkOperator(event.target.textContent);
+                    operand2 = parseInt(lastOperandUsed);
                 }
+
                 else
                 {   
                     functionToCall = checkOperator(storedOperator);
+                    operand2 = parseInt(displayReferenceLog.textContent);
                 }
                 
                 operand1 = parseInt(totalValue)
-                operand2 = parseInt(displayReferenceNum.textContent);
-
-                //Check for 0 value inside the operators if functionToCall is a division
-                if(isZeroDivision(functionToCall)){
+                
+                if(isZeroDivision(functionToCall))
+                {
+                    (console.log("0 found in division operator!"))
                     handleDivisionError();
                     return;
                 }
 
-                //Check for NaN value inside the operators
-                if(operand2 !== operand2 || operand1 !== operand1){
-                    totalValue = operate(functionToCall,totalValue,totalValue);
-                    displayReferenceOp.textContent = "";
-                    displayReferenceNum.textContent = totalValue;
-                    return;
+                if(Number.isNaN(operand2))
+                {
+                    (console.log("NaN found in operand2!"))
+                    operand2 = 0;
                 }
-
                 totalValue = operate(functionToCall,operand1,operand2);
+                lastOperandUsed = operand2;
                 storedOperator = event.target.textContent;
                 displayReferenceOp.textContent = storedOperator;
                 displayReferenceLog.textContent +=  " " + event.target.textContent + " ";
@@ -135,11 +139,10 @@ function addListenerOpButton(buttonReferenceOpNodeList,displayReferenceNum){
 function addListenerEqualButton(buttonReferenceEqual,displayReferenceNum){
     buttonReferenceEqual.addEventListener("click", () =>{
         if(isFirstOperation(totalValue)){
-            console.log("do not press equals without numbers!")
             displayReferenceNum.textContent = totalValue;
         }
         else
-        {   
+        {  
             let functionToCall = checkOperator(storedOperator);
             operand1 = parseInt(totalValue)
             operand2 = parseInt(displayReferenceNum.textContent);
@@ -148,19 +151,14 @@ function addListenerEqualButton(buttonReferenceEqual,displayReferenceNum){
                 handleDivisionError();
                 return;
             }
-            if(operand2 !== operand2 || operand1 !== operand1){
-                totalValue = operate(functionToCall,totalValue,totalValue);
-                displayReferenceOp.textContent = "";
-                displayReferenceNum.textContent = totalValue;
-                return;
+            if(Number.isNaN(operand2)){
+                operand2 = 0;
             }
             totalValue = operate(functionToCall,operand1,operand2);
+            console.log("totalvalue right after pressing '=' " + totalValue)
             storedOperator = "=";
             displayReferenceOp.textContent = "";
-            displayReferenceNum.textContent = totalValue;
-            
-
-            
+            displayReferenceNum.textContent = totalValue;  
         }
     });
 };
@@ -179,6 +177,7 @@ let operand1;
 let operand2;
 let storedOperator;
 let totalValue;
+let lastOperandUsed;
 
 addListenerNumButton(buttonReferenceNum,displayReferenceNum,displayReferenceLog);
 addListenerClearButton(buttonReferenceClear,displayReferenceNum,displayReferenceLog);

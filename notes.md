@@ -10,7 +10,7 @@ APPROACH IDEAS:
 
 (X) - *operand2* is not properly catched when the number has zeroes on the right
 
-(X) - Create *displauReferenceOp* for the operator shown to the user so it does not conflict with the numbers taken
+(X) - Create *displayReferenceOp* for the operator shown to the user so it does not conflict with the numbers taken
 
 EDGE-CASES TO HANDLE:
 
@@ -21,8 +21,9 @@ EDGE-CASES TO HANDLE:
 (X) - Limit  displayReferenceNum to certain amount of width: setting *em* limit and *oveflow:hidden;*
 
 (X) - After pressing *=* the subsequent operation uses the previous operator: store a value in *storedOperator*
+    when *=* is pressed,if that value is found when an operator is pressed, use the current event operator instead.
 
-when *=* is pressed,if that value is found when an operator is pressed, use the current event operator instead.
+(X)- displayReferenceNum gets the totalValue from displayReferenceNum after *=* and then using an *operator*: store operand2 after operating in *lastOperandUsed* and use that instead when *"="* is the operator found
 
 (X) - Clicking equals button right after operator should return *totalValue* (previousOperator) total value: check for NaN by comparing the operands with themselves(NaN value is the only one unequal to itself)
 
