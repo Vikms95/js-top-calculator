@@ -72,18 +72,18 @@ function resetCalculator(){
     return;
 }
 
+function numberAlreadyHasDecimalPoint(event){
+    return event.target.textContent == "." && displayReferenceNumber.textContent.includes(".") ? true : false;
+}
+
 function populateDisplayOnDivisionError(){
     displayReferenceOperation.textContent = "";
     displayReferenceNumber.textContent = "ERROR: Division by 0"
     return;
 }
 
-
-
-
 function populateDisplayOnNumber (event){
     displayReferenceNumber.textContent = lastOperandUsed;
-    console.log(displayReferenceNumber)
     displayReferenceLog.textContent += event.target.textContent;
 }
 
@@ -122,6 +122,9 @@ function addListenerClearButton(){
 function addListenerNumberButton(){ 
     buttonReferenceNumNodeList.forEach(button => {
         button.addEventListener("click", (event) => {
+            if(numberAlreadyHasDecimalPoint(event)){
+                return;
+            }
             lastOperandUsed += event.target.textContent;
             populateDisplayOnNumber(event);
         });
