@@ -78,8 +78,12 @@ function populateDisplayOnDivisionError(){
     return;
 }
 
+
+
+
 function populateDisplayOnNumber (event){
     displayReferenceNumber.textContent = lastOperandUsed;
+    console.log(displayReferenceNumber)
     displayReferenceLog.textContent += event.target.textContent;
 }
 
@@ -89,7 +93,7 @@ function populateDisplayOnFirstOperation (event){
 }
 
 function populateDisplayOnOperation (event){
-    displayReferenceNumber.textContent = totalValue; 
+    displayReferenceNumber.textContent = totalValue.toFixed(2).replace(/[.,]00$/, ""); 
     if(event.target.textContent == "="){
         displayReferenceOperation.textContent = "";
         return;
@@ -118,7 +122,7 @@ function addListenerClearButton(){
 function addListenerNumberButton(){ 
     buttonReferenceNumNodeList.forEach(button => {
         button.addEventListener("click", (event) => {
-            lastOperandUsed += parseInt(event.target.textContent);
+            lastOperandUsed += event.target.textContent;
             populateDisplayOnNumber(event);
         });
     });
@@ -138,7 +142,7 @@ function addListenerOperationButton(){
             } 
             else if(isFirstOperation())
             { 
-                totalValue = parseInt(lastOperandUsed);
+                totalValue = lastOperandUsed;
                 lastOperandUsed = "";
                 storeOperatorandPopulateDisplay(event,populateDisplayOnFirstOperation)
                 return;
@@ -146,7 +150,7 @@ function addListenerOperationButton(){
             else
             {
                 operand1 = totalValue;
-                operand2 = parseInt(lastOperandUsed);   
+                operand2 = lastOperandUsed;   
                 totalValue = operate(storedOperator,operand1,operand2)
                 lastOperandUsed = "";
                 storeOperatorandPopulateDisplay(event,populateDisplayOnOperation)
