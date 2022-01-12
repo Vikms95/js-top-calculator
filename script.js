@@ -34,7 +34,7 @@ function operate(operator,operand1,operand2) {
 }
 
 function isZeroDivision (operand1,operand2){
-    return operand1 && operand2 === 0 ? true : false;
+    return operand1 && operand2 === "0" ? true : false;
 }
 
 function isFirstOperation(){
@@ -51,6 +51,14 @@ function isOperationAfterEquals(){
 
 function clearDisplay(){
     displayReferenceNumber.textContent = "";
+}
+
+function deleteSum(){
+    lastOperandUsed = lastOperandUsed.substring(0,lastOperandUsed.length -1);
+    displayReferenceNumber.textContent = displayReferenceNumber
+                                        .textContent
+                                        .substring(0,displayReferenceNumber.textContent.length -1);
+    
 }
 
 function clearSum(){
@@ -88,18 +96,24 @@ function populateDisplayOnNumber (event){
 }
 
 function populateDisplayOnFirstOperation (event){
-    displayReferenceLog.textContent += event.target.textContent;
-    displayReferenceOperation.textContent = event.target.textContent;
+        displayReferenceLog.textContent += event.target.textContent;
+        displayReferenceOperation.textContent = event.target.textContent;
+
+
 }
 
 function populateDisplayOnOperation (event){
-    displayReferenceNumber.textContent = totalValue.toFixed(2).replace(/[.,]00$/, ""); 
-    if(event.target.textContent == "="){
-        displayReferenceOperation.textContent = "";
+    try{
+        displayReferenceNumber.textContent = totalValue.toFixed(2).replace(/[.,]00$/, ""); 
+        if(event.target.textContent == "="){
+            displayReferenceOperation.textContent = "";
+            return;
+        }
+        displayReferenceOperation.textContent = event.target.textContent;
+        displayReferenceLog.textContent += event.target.textContent;
+    }catch(e){
         return;
     }
-    displayReferenceOperation.textContent = event.target.textContent;
-    displayReferenceLog.textContent += event.target.textContent;
     
 }
 
@@ -111,6 +125,12 @@ function populateDisplayOnEquals (){
 function storeOperatorandPopulateDisplay(event,populateDisplayFunction){
     storedOperator = event.target.textContent;
     populateDisplayFunction(event);
+}
+
+function addListenerDeleteButton(){
+    buttonReferenceDelete.addEventListener("click", () => {
+        deleteSum();
+    })
 }
 
 function addListenerClearButton(){
@@ -135,23 +155,20 @@ function addListenerOperationButton(){
     buttonReferenceOpNodeList.forEach(button =>{
         button.addEventListener("click", (event) => {
             clearDisplay();
-            if(isOperationWithNoOperands())
-            {
+            if(isOperationWithNoOperands()){
                 if(isOperationAfterEquals()){
                     storeOperatorandPopulateDisplay(event,populateDisplayOnOperation)
                     return;
                 }
                 return;
             } 
-            else if(isFirstOperation())
-            { 
+            else if(isFirstOperation()){ 
                 totalValue = lastOperandUsed;
                 lastOperandUsed = "";
                 storeOperatorandPopulateDisplay(event,populateDisplayOnFirstOperation)
                 return;
             }
-            else
-            {
+            else{
                 operand1 = totalValue;
                 operand2 = lastOperandUsed;   
                 totalValue = operate(storedOperator,operand1,operand2)
@@ -166,8 +183,8 @@ function addListenerOperationButton(){
 const buttonReferenceNumNodeList = document.querySelectorAll(".num-button");
 const buttonReferenceOpNodeList = document.querySelectorAll(".op-button");
 const buttonReferenceClear = document.querySelector(".clear-button");
-const buttonReferenceEqual = document.querySelector(".op-button");
-const displayReferenceLog = document.querySelector(".display-log");
+const displayReferenceLog = document.querySelector(".display-log")
+const buttonReferenceDelete =  document.querySelector(".delete-button");
 const displayReferenceNumber = document.querySelector(".display-num");
 const displayReferenceOperation = document.querySelector(".display-operator");
 
@@ -180,4 +197,5 @@ let totalValue = 0;
 
 addListenerNumberButton();
 addListenerClearButton();
+addListenerDeleteButton();
 addListenerOperationButton();

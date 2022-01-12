@@ -17,9 +17,9 @@ INSTRUCTIONS CHECKLIST
 6.4 X
 6.5 X
 6.6 X
-7
-8
-9
+7 X
+8 
+9 X
 10
 
 
