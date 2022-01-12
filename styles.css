@@ -6,15 +6,13 @@ body{
 .main-layout{
     box-sizing: border-box;
     background-color: black;
-    border-right: solid 15px gray;
-    border-bottom: solid 15px gray;
     border-radius: 5px;
     padding: 20px;
     
     display: flex;
     flex-flow: column;
     min-height: 600px;
-    min-width: 500px;
+    min-width: 470px;
 }
 
 .display-log{
@@ -102,16 +100,13 @@ button:hover {background-color: #6b6b6b}
 
 button:active {
     background-color: #616161;
-    box-shadow: 0 5px #666;
+    box-shadow: 0 1px #666;
     transform: translateY(4px);
   }
 
-button.clear-button{
-    color: red;
+button.clear-button{color: red;
 }
-button.delete-button{
-    color: rgb(38, 0, 255);
-}
+button.delete-button{color: rgb(38, 0, 255)}
 
 button.bracket-button,
 button.percentage-button,
@@ -126,6 +121,4 @@ button.equals-button{
 button.zero-button{
     border-radius: 10px;
     flex:0.75;
-
-
 }

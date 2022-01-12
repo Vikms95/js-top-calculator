@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Document</title>
+    <title>Calculator</title>
 </head>
 <body>
     <div class="main-layout">
@@ -17,36 +17,38 @@
         
         <div class="buttons">
             <div class="row-one">
-                <button class="clear-button">AC</button>
-                <button class="delete-button">D</button>
-                <button class="op-button percentage-button">%</button>
-                <button class="op-button divide-button">/</button>
+                <button onclick="playSound()" class="clear-button" >AC</button>
+                <button onclick="playSound()"  class="delete-button">D</button>
+                <button onclick="playSound()"  class="op-button percentage-button">%</button>
+                <button onclick="playSound()"  class="op-button divide-button">/</button>
             </div>
             <div class="row-two">
-                <button class="num-button seven-button">7</button>
-                <button class="num-button eight-button">8</button>
-                <button class="num-button nine-button">9</button>
-                <button class="op-button multiply-button">*</button>
+                <button onclick="playSound()"  class="num-button seven-button">7</button>
+                <button onclick="playSound()"  class="num-button eight-button">8</button>
+                <button onclick="playSound()"  class="num-button nine-button">9</button>
+                <button onclick="playSound()"  class="op-button multiply-button">*</button>
             </div>
             <div class="row-three">
-                <button class="num-button four-button">4</button>
-                <button class="num-button five-button">5</button>
-                <button class="num-button six-button">6</button>
-                <button class="op-button substract-button">-</button>
+                <button onclick="playSound()"  class="num-button four-button">4</button>
+                <button onclick="playSound()"  class="num-button five-button">5</button>
+                <button onclick="playSound()"  class="num-button six-button">6</button>
+                <button onclick="playSound()"  class="op-button substract-button">-</button>
             </div>
             <div class="row-four">
-                <button class="num-button one-button">1</button>
-                <button class="num-button two-button">2</button>
-                <button class="num-button three-button">3</button>
-                <button class="op-button add-button">+</button>
+                <button onclick="playSound()"  class="num-button one-button">1</button>
+                <button onclick="playSound()"  class="num-button two-button">2</button>
+                <button onclick="playSound()"  class="num-button three-button">3</button>
+                <button onclick="playSound()"  class="op-button add-button">+</button>
             </div>
             <div class="row-five">
-                <button class="num-button zero-button">0</button>
-                <button class="num-button decimal-button">.</button>
-                <button class="op-button equals-button">=</button>
+                <button onclick="playSound()"  class="num-button zero-button">0</button>
+                <button onclick="playSound()"  class="num-button decimal-button">.</button>
+                <button onclick="playSound()"  class="op-button equals-button">=</button>
             </div>
         </div>
     </div>
+    <audio id="audio" src="sounds/button-press.mp3" autoplay="false" ></audio>
 </body>
 <script src="script.js"></script>
+
 </html>

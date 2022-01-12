@@ -22,12 +22,17 @@ function divide(operand1,operand2){
     }
 }
 
+function percentage(operand1,operand2){
+    return (operand1 * operand2) / 100;
+}
+
 function operate(operator,operand1,operand2) {
     const OPERATION_FUNCTIONS = {
         "+" : add,
         "-" : substract,
         "*" : multiply,
         "/" : divide,
+        "%" : percentage,
     }
     operator = OPERATION_FUNCTIONS[operator]
     return operator(operand1,operand2);
@@ -179,7 +184,11 @@ function addListenerOperationButton(){
         });
     });
 };
-  
+
+function playSound() {
+    var sound = document.getElementById("audio");
+    sound.play();
+}
 
 const buttonReferenceNumNodeList = document.querySelectorAll(".num-button");
 const buttonReferenceOpNodeList = document.querySelectorAll(".op-button");
@@ -188,6 +197,7 @@ const displayReferenceLog = document.querySelector(".display-log")
 const buttonReferenceDelete =  document.querySelector(".delete-button");
 const displayReferenceNumber = document.querySelector(".display-num");
 const displayReferenceOperation = document.querySelector(".display-operator");
+const buttonReferenceSoundClick = document.querySelector("button");
 
 let operand1;
 let operand2;
@@ -200,3 +210,4 @@ addListenerNumberButton();
 addListenerClearButton();
 addListenerDeleteButton();
 addListenerOperationButton();
+
