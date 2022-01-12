@@ -1,28 +1,53 @@
-body{
+body {
+    background-image: url(images/YQOHau.jpg);
+    background-size: cover;
+    background-color: #283e58;
     display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+.calculator{
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
 .main-layout{
     box-sizing: border-box;
-    background-color: black;
-    border-radius: 5px;
+    background-color: rgb(31, 30, 30);
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px 5px rgb(48, 48, 48);
     padding: 20px;
     
     display: flex;
+    flex:2 0 auto;
     flex-flow: column;
-    min-height: 600px;
+    min-height: 500px;
     min-width: 470px;
+}
+
+.outline{
+    background-color: black;
+    padding: 10px;
+    border:solid 0.5px white;
+    border-radius: 20px;
 }
 
 .display-log{
     color: white;
+    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
     font-size: 15px;
+    font-family: 'Orbitron', sans-serif;
     border-bottom: solid 2px grey;
     height: 45px;
-
+    
     overflow: hidden;
-    max-width:29em;
+    max-width:28em;
     
     display: flex;
     justify-content: flex-start;
@@ -31,10 +56,12 @@ body{
 
 .display-sum{
     color: white;
+    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
     font-size: 30px;
     font-weight: bolder;
+    font-family: 'Orbitron', sans-serif;
     border-bottom: solid 2px grey;
-
+    
     gap: 5px;
     overflow: hidden;
     text-overflow: clip;
@@ -43,7 +70,7 @@ body{
     flex-direction: row;
     max-width: 14em;
     justify-content: flex-end;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .display-operator{
@@ -55,6 +82,25 @@ body{
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
+}
+
+.display-brand{
+    color: aliceblue;
+    font-size: 15px;
+    font-weight: bolder;
+    font-family: 'Orbitron', sans-serif;
+    height: 20px;
+    max-width:28em;
+    padding: 5px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.display-me{
+    font-size: 8px;
+    font-style: italic;
 }
 
 .buttons{
@@ -85,6 +131,7 @@ button{
     box-shadow: 0 1px rgb(27, 27, 27);
     background-color: rgb(27, 27, 27);
     color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     font-size: xx-large;
     font-weight: 900;
     border:solid 0.1px rgb(0, 0, 0) ;
@@ -95,30 +142,53 @@ button{
     justify-content: center;
     align-items: center;
 }
-
-button:hover {background-color: #6b6b6b}
-
+.num-button{
+    font-family:'Orbitron', sans-serif;
+}
 button:active {
     background-color: #616161;
     box-shadow: 0 1px #666;
     transform: translateY(4px);
-  }
-
-button.clear-button{color: red;
 }
+
+button:hover {background-color: #6b6b6b}
+
+button.clear-button{color: red;}
+
 button.delete-button{color: rgb(38, 0, 255)}
 
 button.bracket-button,
 button.percentage-button,
-.op-button{
-    color: greenyellow;
-}
+.op-button{color: greenyellow;}
+
 button.equals-button{
     background-color: rgb(126, 170, 60);
     color: white;
 }
 
 button.zero-button{
-    border-radius: 10px;
+    border-radius: 35px;
     flex:0.75;
+}
+
+.github-link{
+    font-family: 'Caveat', cursive;
+    font-size: 20px;
+    font-weight: bolder;
+    max-width: 150px;
+    padding: 20px;
+    padding-top: 15px;
+    margin: 30px;
+    background-color: rgb(253, 243, 185);
+    border-radius: 10px 5px 0px 1px;
+    box-shadow: 10px 5px 20px 0px rgb(99, 98, 98);
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;  
+}
+p.github-link{
+    color: black;
+    margin:5%;
+    font-weight: bold;  
 }

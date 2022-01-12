@@ -34,7 +34,7 @@ function operate(operator,operand1,operand2) {
         "/" : divide,
         "%" : percentage,
     }
-    operator = OPERATION_FUNCTIONS[operator]
+    operator = OPERATION_FUNCTIONS[operator];
     return operator(operand1,operand2);
 }
 
@@ -64,7 +64,10 @@ function deleteSum(){
                                         .textContent
                                         .slice(0,displayReferenceNumber
                                         .textContent.length -1);
-    
+    displayReferenceLog.textContent = displayReferenceLog
+                                        .textContent
+                                        .slice(0,displayReferenceLog
+                                            .textContent.length -1);
 }
 
 function clearSum(){
@@ -76,14 +79,11 @@ function clearSum(){
     lastOperandUsed = "";
     storedOperator = "";
     totalValue = 0;
-    
-    return;
 };
 
 function resetCalculator(){
-    alert("Reseting calculator...")
+    alert("Reseting calculator...");
     clearSum();
-    return;
 }
 
 function numberAlreadyHasDecimalPoint(event){
@@ -92,8 +92,7 @@ function numberAlreadyHasDecimalPoint(event){
 
 function populateDisplayOnDivisionError(){
     displayReferenceOperation.textContent = "";
-    displayReferenceNumber.textContent = "ERROR: Division by 0"
-    return;
+    displayReferenceNumber.textContent = "ERROR: Division by 0";
 }
 
 function populateDisplayOnNumber (event){
@@ -104,8 +103,6 @@ function populateDisplayOnNumber (event){
 function populateDisplayOnFirstOperation (event){
         displayReferenceLog.textContent += event.target.textContent;
         displayReferenceOperation.textContent = event.target.textContent;
-
-
 }
 
 function populateDisplayOnOperation (event){
@@ -141,7 +138,7 @@ function addListenerDeleteButton(){
 
 function addListenerClearButton(){
     buttonReferenceClear.addEventListener("click", () => {
-        clearSum()
+        clearSum();
     });
 };
 
@@ -163,7 +160,7 @@ function addListenerOperationButton(){
             clearDisplay();
             if(isOperationWithNoOperands()){
                 if(isOperationAfterEquals()){
-                    storeOperatorandPopulateDisplay(event,populateDisplayOnOperation)
+                    storeOperatorandPopulateDisplay(event,populateDisplayOnOperation);
                     return;
                 }
                 return;
@@ -177,9 +174,9 @@ function addListenerOperationButton(){
             else{
                 operand1 = totalValue;
                 operand2 = lastOperandUsed;   
-                totalValue = operate(storedOperator,operand1,operand2)
+                totalValue = operate(storedOperator,operand1,operand2);
                 lastOperandUsed = "";
-                storeOperatorandPopulateDisplay(event,populateDisplayOnOperation)
+                storeOperatorandPopulateDisplay(event,populateDisplayOnOperation);
             }; 
         });
     });
@@ -210,4 +207,3 @@ addListenerNumberButton();
 addListenerClearButton();
 addListenerDeleteButton();
 addListenerOperationButton();
-

@@ -5,50 +5,71 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Calculator</title>
 </head>
-<body>
-    <div class="main-layout">
-        <div class="display-log"></div>
-        <div class="display-sum">
-            <div class="display-num"></div>
-            <div class="display-operator"></div>
-        </div>
-        
-        <div class="buttons">
-            <div class="row-one">
-                <button onclick="playSound()" class="clear-button" >AC</button>
-                <button onclick="playSound()"  class="delete-button">D</button>
-                <button onclick="playSound()"  class="op-button percentage-button">%</button>
-                <button onclick="playSound()"  class="op-button divide-button">/</button>
+    <body>
+            <div class="calculator">
+                <div class="main-layout">
+                    <div class="outline">
+                        <div class="display-log"></div>
+                        <div class="display-sum">
+                            <div class="display-num"></div>
+                            <div class="display-operator"></div>
+                        </div>
+                        <div class="display-brand">
+                            <div class="display-name">QUESIO</div>
+                            <div class="display-me">Created by Vikms</div>
+                        </div>
+                        <div class="buttons">
+                            <div class="row-one">
+                                <button onclick="playSound()" class="clear-button" >AC</button>
+                                <button onclick="playSound()"  class="delete-button"> DEL </button>
+                                <button onclick="playSound()"  class="op-button percentage-button">%</button>
+                                <button onclick="playSound()"  class="op-button divide-button">/</button>
+                            </div>
+                            <div class="row-two">
+                                <button onclick="playSound()"  class="num-button seven-button">7</button>
+                                <button onclick="playSound()"  class="num-button eight-button">8</button>
+                                <button onclick="playSound()"  class="num-button nine-button">9</button>
+                                <button onclick="playSound()"  class="op-button multiply-button">*</button>
+                            </div>
+                            <div class="row-three">
+                                <button onclick="playSound()"  class="num-button four-button">4</button>
+                                <button onclick="playSound()"  class="num-button five-button">5</button>
+                                <button onclick="playSound()"  class="num-button six-button">6</button>
+                                <button onclick="playSound()"  class="op-button substract-button">-</button>
+                            </div>
+                            <div class="row-four">
+                                <button onclick="playSound()"  class="num-button one-button">1</button>
+                                <button onclick="playSound()"  class="num-button two-button">2</button>
+                                <button onclick="playSound()"  class="num-button three-button">3</button>
+                                <button onclick="playSound()"  class="op-button add-button">+</button>
+                            </div>
+                            <div class="row-five">
+                                <button onclick="playSound()"  class="num-button zero-button">0</button>
+                                <button onclick="playSound()"  class="num-button decimal-button">.</button>
+                                <button onclick="playSound()"  class="op-button equals-button">=</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row-two">
-                <button onclick="playSound()"  class="num-button seven-button">7</button>
-                <button onclick="playSound()"  class="num-button eight-button">8</button>
-                <button onclick="playSound()"  class="num-button nine-button">9</button>
-                <button onclick="playSound()"  class="op-button multiply-button">*</button>
-            </div>
-            <div class="row-three">
-                <button onclick="playSound()"  class="num-button four-button">4</button>
-                <button onclick="playSound()"  class="num-button five-button">5</button>
-                <button onclick="playSound()"  class="num-button six-button">6</button>
-                <button onclick="playSound()"  class="op-button substract-button">-</button>
-            </div>
-            <div class="row-four">
-                <button onclick="playSound()"  class="num-button one-button">1</button>
-                <button onclick="playSound()"  class="num-button two-button">2</button>
-                <button onclick="playSound()"  class="num-button three-button">3</button>
-                <button onclick="playSound()"  class="op-button add-button">+</button>
-            </div>
-            <div class="row-five">
-                <button onclick="playSound()"  class="num-button zero-button">0</button>
-                <button onclick="playSound()"  class="num-button decimal-button">.</button>
-                <button onclick="playSound()"  class="op-button equals-button">=</button>
-            </div>
-        </div>
-    </div>
-    <audio id="audio" src="sounds/button-press.mp3" autoplay="false" ></audio>
-</body>
+           <div class="github-link">
+               <p> This is a project created for The Odin Project as finisher of the Foundations section.</p>
+               <p> You can find my other projects in the link below:</p>
+                <div class="links">
+                <a class="fa fa-github"></a>
+                <a style="color: black;" href="https://github.com/Vikms95"> My projects</a>
+                </div>
+            </div> 
+    </body>
+<audio id="audio" src="sounds/button-press.mp3" autoplay="false" ></audio>
 <script src="script.js"></script>
-
 </html>
