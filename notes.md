@@ -7,7 +7,7 @@ APPROACH IDEAS:
 (X) - **(.display-log)** Have a *string* value display the operations to *display.log*
 
 EDGE-CASES TO HANDLE:
-
+-When dividing by 0, show error message and reset after 1 second
 
 INSTRUCTIONS CHECKLIST
 6.1 X
