@@ -54,10 +54,11 @@ function clearDisplay(){
 }
 
 function deleteSum(){
-    lastOperandUsed = lastOperandUsed.substring(0,lastOperandUsed.length -1);
+    lastOperandUsed = lastOperandUsed.slice(0,lastOperandUsed.length -1);
     displayReferenceNumber.textContent = displayReferenceNumber
                                         .textContent
-                                        .substring(0,displayReferenceNumber.textContent.length -1);
+                                        .slice(0,displayReferenceNumber
+                                        .textContent.length -1);
     
 }
 

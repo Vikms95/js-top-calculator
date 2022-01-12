@@ -61,14 +61,12 @@ body{
 
 .buttons{
     height: 100%;
-    margin:20px;
-    gap: 5px;
+    margin:10px;
+    gap: 8px;
 
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    align-items: stretch;
-    flex:1 1 auto;
 }
 
 .row-one,
@@ -111,6 +109,10 @@ button:active {
 button.clear-button{
     color: red;
 }
+button.delete-button{
+    color: rgb(38, 0, 255);
+}
+
 button.bracket-button,
 button.percentage-button,
 .op-button{
@@ -118,4 +120,12 @@ button.percentage-button,
 }
 button.equals-button{
     background-color: rgb(126, 170, 60);
+    color: white;
+}
+
+button.zero-button{
+    border-radius: 10px;
+    flex:0.75;
+
+
 }
