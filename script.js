@@ -59,6 +59,8 @@ function clearDisplay(){
 }
 
 function deleteSum(){
+    if(displayReferenceNumber.textContent.length > 0){
+
     lastOperandUsed = lastOperandUsed.slice(0,lastOperandUsed.length -1);
     displayReferenceNumber.textContent = displayReferenceNumber
                                         .textContent
@@ -68,6 +70,7 @@ function deleteSum(){
                                         .textContent
                                         .slice(0,displayReferenceLog
                                             .textContent.length -1);
+    }
 }
 
 function clearSum(){
