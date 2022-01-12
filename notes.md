@@ -53,4 +53,7 @@ INSTRUCTIONS CHECKLIST
 totalValue = operate(operator, operand1,operand2));
 addListenerNumButton  > populate Sum,Log and store number in lastOperandUsed
 
-operate with lastOperandUsed + totalValue
+operate with totalValue + lastOperandUsed
+
+isFirstOperation = check if totalValue is 0
+

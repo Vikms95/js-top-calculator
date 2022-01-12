@@ -12,8 +12,8 @@ function multiply(operand1,operand2){
 
 function divide(operand1,operand2){
     if(isZeroDivision(operand1,operand2)){
-        displayReferenceNum.textContent = "ERROR: Division by 0"
-        displayReferenceOp.textContent = "";
+        displayReferenceNumber.textContent = "ERROR: Division by 0"
+        displayReferenceOperation.textContent = "";
         alert("You can't divide by 0. Reseting operation..")
         clearSum();
         return;
@@ -22,10 +22,6 @@ function divide(operand1,operand2){
     {
         return (+operand1) / (+operand2); 
     }
-}
-
-function isZeroDivision (operand1,operand2){
-    return operand1 && operand2 === 0 ? true : false;
 }
 
 function operate(operator,operand1,operand2) {
@@ -39,87 +35,136 @@ function operate(operator,operand1,operand2) {
     return operator(operand1,operand2);
 }
 
-function resetCalculatorIfNoOperands(){
-    alert("You need a number before operating. Reseting operation..")
+function isZeroDivision (operand1,operand2){
+    return operand1 && operand2 === 0 ? true : false;
+}
+
+function checkForConsecutiveOperators(){
+    if(isFirstOperation(totalValue)){
+        resetCalculator();
+        return;
+    }   
+}
+
+function isOperationWithNoOperands(){
+    return lastOperandUsed === "" ? true : false;
+}
+
+function resetCalculator(){
+    alert("Reseting calculator...")
     clearSum();
     return;
 }
 
-function isFirstOperation(totalValue){
-    return displayReferenceLog == "" || totalValue == undefined ? true : false;
-}
-
 function clearSum(){
-    displayReferenceNum.textContent = '';
+    displayReferenceNumber.textContent = '';
     displayReferenceLog.textContent = '';
-    displayReferenceOp.textContent = '';
-    totalValue = undefined;
+    displayReferenceOperation.textContent = '';
     operand1 = undefined;
     operand2 = undefined;
-    lastOperandUsed = undefined;
-    storedOperator = undefined;
+    lastOperandUsed = "";
+    storedOperator = "";
+    totalValue = 0;
+    
     return;
 };
 
-function addListenerClearButton(buttonReferenceClear){
+function isFirstOperation(){
+    return  totalValue == 0 ? true : false;
+}
+
+function addListenerCLEARButton(){
     buttonReferenceClear.addEventListener("click", () => {
         clearSum()
     });
 };
 
-
-
-function addListenerNumButton(buttonReferenceNumNodeList,displayReferenceNum,displayReferenceLog){ 
-    buttonReferenceNumNodeList.forEach(button => {
-        button.addEventListener("click", (event) => {
-            lastOperandUsed = event.target.textContent;
-            displayReferenceNum.textContent += event.target.textContent;
-            displayReferenceLog.textContent += event.target.textContent;
-        })
-    });
+function clearDisplay(){
+    displayReferenceNumber.textContent = "";
 }
 
-function addListenerOpButton(buttonReferenceOpNodeList,displayReferenceNum){ 
+function populateDisplayOnNUMBER (event){
+    displayReferenceNumber.textContent = lastOperandUsed;
+    displayReferenceLog.textContent += event.target.textContent;
+}
+
+function populateDisplayOnOPERATION (event){
+    displayReferenceNumber.textContent = totalValue;
+    displayReferenceLog.textContent += event.target.textContent;
+    displayReferenceOperation.textContent = event.target.textContent;
+}
+
+function populateDisplayOnFIRSTOPERATION (event){
+    displayReferenceLog.textContent += event.target.textContent;
+    displayReferenceOperation.textContent = event.target.textContent;
+}
+
+function addListenerNUMBERButton(){ 
+    buttonReferenceNumNodeList.forEach(button => {
+        button.addEventListener("click", (event) => {
+            lastOperandUsed += parseInt(event.target.textContent);
+            populateDisplayOnNUMBER(event);
+        });
+    });
+};
+
+function addListenerOPERATIONButton(){ 
     buttonReferenceOpNodeList.forEach(button =>{
         button.addEventListener("click", (event) => {
-            if(isFirstOperation(totalValue)){
-                console.log("first operation!")
-                resetCalculatorIfNoOperands();
+            if(isOperationWithNoOperands()){
+                resetCalculator();
+                return;
+            } 
+            else if(isFirstOperation()){
+                clearDisplay();
+                totalValue = parseInt(lastOperandUsed);
+                storedOperator = event.target.textContent;
+                lastOperandUsed = "";
+                populateDisplayOnFIRSTOPERATION(event);
                 return;
             }
+            else
+            {   clearDisplay();
+                operand1 = totalValue;
+                operand2 = parseInt(lastOperandUsed);
+                totalValue = operate(storedOperator,operand1,operand2)
+                storedOperator = event.target.textContent;
+                lastOperandUsed = "";
+                populateDisplayOnOPERATION(event);
+                
+
+            } 
         })
     })
 };
              
-function addListenerEqualButton(buttonReferenceEqual,displayReferenceNum){
+function addListenerEQUALButton(){
     buttonReferenceEqual.addEventListener("click", () =>{
-        if(isFirstOperation(totalValue)){
-            displayReferenceNum.textContent = totalValue;
-        }
+        // checkForConsecutiveOperators();
         
  
         return;
     })
 }
 
-const buttonReferenceNum = document.querySelectorAll(".num-button");
-const buttonReferenceOp = document.querySelectorAll(".op-button");
+const buttonReferenceNumNodeList = document.querySelectorAll(".num-button");
+const buttonReferenceOpNodeList = document.querySelectorAll(".op-button");
 const buttonReferenceClear = document.querySelector(".clear-button");
 const buttonReferenceEqual = document.querySelector(".equals-button");
 const displayReferenceLog = document.querySelector(".display-log");
-const displayReferenceNum = document.querySelector(".display-num");
-const displayReferenceOp = document.querySelector(".display-operator");
+const displayReferenceNumber = document.querySelector(".display-num");
+const displayReferenceOperation = document.querySelector(".display-operator");
 
 let operand1;
 let operand2;
-let lastOperandUsed;
+let lastOperandUsed = "";
 let storedOperator;
-let totalValue;
+let totalValue = 0;
 
-addListenerNumButton(buttonReferenceNum,displayReferenceNum,displayReferenceLog);
-addListenerClearButton(buttonReferenceClear,displayReferenceNum,displayReferenceLog);
-addListenerOpButton(buttonReferenceOp,displayReferenceNum,displayReferenceLog)
-addListenerEqualButton(buttonReferenceEqual,displayReferenceNum,displayReferenceLog)
+addListenerNUMBERButton();
+addListenerCLEARButton();
+addListenerOPERATIONButton()
+addListenerEQUALButton()
 console.log()
 
 
