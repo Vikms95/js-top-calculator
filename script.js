@@ -1,3 +1,4 @@
+//Element references
 const buttonReferenceNumNodeList = document.querySelectorAll(".num-button");
 const buttonReferenceOpNodeList = document.querySelectorAll(".op-button");
 const buttonReferenceClear = document.querySelector(".clear-button");
@@ -7,6 +8,7 @@ const displayReferenceNumber = document.querySelector(".display-num");
 const displayReferenceOperation = document.querySelector(".display-operator");
 const buttonReferenceSoundClick = document.querySelector("button");
 
+//Variables used all throughout the functions
 let operand1;
 let operand2;
 let lastOperandUsed = "";
@@ -20,6 +22,8 @@ addListenerClearButton();
 addListenerDeleteButton();
 addListenerOperationButton();
 
+
+//Basic operation functions
 function add(operand1,operand2){
     return (+operand1) + (+operand2);
 };
@@ -62,6 +66,8 @@ function operate(operator,operand1,operand2) {
     return operator(operand1,operand2);
 };
 
+
+//General managing of display and totalValue
 function clearDisplay(){
     displayReferenceNumber.textContent = "";
 };
@@ -98,6 +104,7 @@ function resetCalculator(){
     clearSum();
 };
 
+//Managing display on errors
 function populateDisplayOnDivisionError(){
     displayReferenceOperation.textContent = "";
     displayReferenceNumber.textContent = "ERROR: Division by 0";
@@ -114,6 +121,8 @@ function displayErrorAndReset(){
     return;
 };
 
+
+//Populate display on event listener functions
 function populateDisplayOnNumber (event){
     displayReferenceNumber.textContent = lastOperandUsed;
     displayReferenceLog.textContent += event.target.textContent;
@@ -150,6 +159,8 @@ function storeOperatorandPopulateDisplay(event,populateDisplayFunction){
     populateDisplayFunction(event);
 };
 
+
+//Add event listener functions
 function addListenerDeleteButton(){
     buttonReferenceDelete.addEventListener("click", () => {
         deleteSum();
@@ -162,6 +173,26 @@ function addListenerClearButton(){
     });
 };
 
+function addListenerNumberButton(){ 
+    buttonReferenceNumNodeList.forEach(button => {
+        button.addEventListener("click", (event) => {
+        setUpNumber(event);
+        });
+    });
+};
+
+function addListenerOperationButton(){ 
+    buttonReferenceOpNodeList.forEach(button =>{
+        button.addEventListener("click", (event) => {
+            clearDisplay();
+            setUpOperation(event);
+            button.removeEventListener("click",setUpOperation);
+        });
+    });
+};
+
+
+//Trigger functions when event is listened
 function setUpNumber(event){
     let hasOperandDecimalPoint = event.target.textContent == "." && displayReferenceNumber.textContent.includes(".");
 
@@ -172,20 +203,13 @@ function setUpNumber(event){
     populateDisplayOnNumber(event);
 };
 
-function addListenerNumberButton(){ 
-    buttonReferenceNumNodeList.forEach(button => {
-        button.addEventListener("click", (event) => {
-        setUpNumber(event);
-        });
-    });
-};
-
 function setUpOperation(event){
 
+    //Boolean checks to ensure valid operations
     let isFirstOperation = totalValue === 0;
     let isOperationWithNoOperands = lastOperandUsed === "";
     let isOperationAfterEquals = storedOperator === "=";
-    let isOperationOfNan = operand1 === "." || operand2 === "." || lastOperandUsed === ".";
+    let areOperandsNan = operand1 === "." || operand2 === "." || lastOperandUsed === ".";
 
     if(isOperationWithNoOperands){
         if(isOperationAfterEquals){
@@ -195,7 +219,7 @@ function setUpOperation(event){
         return;
     } 
     else if(isFirstOperation){ 
-        if(isOperationOfNan){
+        if(areOperandsNan){
             displayErrorAndReset();
             return;
         }   
@@ -208,7 +232,7 @@ function setUpOperation(event){
     else{
         operand1 = totalValue;
         operand2 = lastOperandUsed;
-        if(isOperationOfNan){
+        if(areOperandsNan){
             displayErrorAndReset();
             return;
         }   
@@ -216,18 +240,9 @@ function setUpOperation(event){
         lastOperandUsed = "";
         isEraseEnabled = false;
         storeOperatorandPopulateDisplay(event,populateDisplayOnOperation);
-        
     };
 }
 
-function addListenerOperationButton(){ 
-    buttonReferenceOpNodeList.forEach(button =>{
-        button.addEventListener("click", (event) => {
-            clearDisplay();
-            setUpOperation(event);
-        });
-    });
-};
 
 function playSound() {
     var sound = document.getElementById("audio");
