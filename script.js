@@ -84,6 +84,11 @@ function populateDisplayOnDivisionError(){
     displayReferenceNumber.textContent = "ERROR: Division by 0";
 }
 
+function populateDisplayOnOperandError(){
+    displayReferenceOperation.textContent = "";
+    displayReferenceNumber.textContent = "ERROR: Invalid operands";
+}
+
 function populateDisplayOnNumber (event){
     displayReferenceNumber.textContent = lastOperandUsed;
     displayReferenceLog.textContent += event.target.textContent;
@@ -150,6 +155,7 @@ function addListenerOperationButton(){
             let isFirstOperation = totalValue === 0;
             let isOperationWithNoOperands = lastOperandUsed === "";
             let isOperationAfterEquals = storedOperator === "=";
+            let isOperationOfNan = operand1 === "." || operand2 === "." || lastOperandUsed === ".";
             clearDisplay();
             
             if(isOperationWithNoOperands){
@@ -160,6 +166,11 @@ function addListenerOperationButton(){
                 return;
             } 
             else if(isFirstOperation){ 
+                if(isOperationOfNan){
+                    setTimeout(populateDisplayOnOperandError,200);
+                    setTimeout(resetCalculator,1000);
+                    return;
+                }   
                 totalValue = lastOperandUsed;
                 lastOperandUsed = "";
                 storeOperatorandPopulateDisplay(event,populateDisplayOnFirstOperation)
@@ -167,7 +178,12 @@ function addListenerOperationButton(){
             }
             else{
                 operand1 = totalValue;
-                operand2 = lastOperandUsed;   
+                operand2 = lastOperandUsed;
+                if(isOperationOfNan){
+                    setTimeout(populateDisplayOnOperandError,200);
+                    setTimeout(resetCalculator,1000);
+                    return;
+                }   
                 totalValue = operate(storedOperator,operand1,operand2);
                 lastOperandUsed = "";
                 storeOperatorandPopulateDisplay(event,populateDisplayOnOperation);
