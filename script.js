@@ -11,7 +11,9 @@ function multiply(operand1,operand2){
 }
 
 function divide(operand1,operand2){
-    if(isZeroDivision(operand1,operand2)){
+    let isZeroDivision = operand1 === "0" || operand2 === "0";
+
+    if(isZeroDivision){
         setTimeout(populateDisplayOnDivisionError,200);
         setTimeout(resetCalculator,1000);
         return;
@@ -36,22 +38,6 @@ function operate(operator,operand1,operand2) {
     }
     operator = OPERATION_FUNCTIONS[operator];
     return operator(operand1,operand2);
-}
-
-function isZeroDivision (operand1,operand2){
-    return operand1 && operand2 === "0" ? true : false;
-}
-
-function isFirstOperation(){
-    return  totalValue == 0 ? true : false;
-}
-
-function isOperationWithNoOperands(){
-    return lastOperandUsed === "" ? true : false;
-}
-
-function isOperationAfterEquals(){
-    return storedOperator == "=" ? true : false;
 }
 
 function clearDisplay(){
@@ -160,15 +146,20 @@ function addListenerNumberButton(){
 function addListenerOperationButton(){ 
     buttonReferenceOpNodeList.forEach(button =>{
         button.addEventListener("click", (event) => {
+            
+            let isFirstOperation = totalValue === 0;
+            let isOperationWithNoOperands = lastOperandUsed === "";
+            let isOperationAfterEquals = storedOperator === "=";
             clearDisplay();
-            if(isOperationWithNoOperands()){
-                if(isOperationAfterEquals()){
+            
+            if(isOperationWithNoOperands){
+                if(isOperationAfterEquals){
                     storeOperatorandPopulateDisplay(event,populateDisplayOnOperation);
                     return;
                 }
                 return;
             } 
-            else if(isFirstOperation()){ 
+            else if(isFirstOperation){ 
                 totalValue = lastOperandUsed;
                 lastOperandUsed = "";
                 storeOperatorandPopulateDisplay(event,populateDisplayOnFirstOperation)
@@ -205,6 +196,7 @@ let lastOperandUsed = "";
 let storedOperator;
 let storedOperator2;
 let totalValue = 0;
+
 
 addListenerNumberButton();
 addListenerClearButton();
