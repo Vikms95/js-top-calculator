@@ -45,7 +45,7 @@ function clearDisplay(){
 }
 
 function deleteSum(){
-    if(displayReferenceNumber.textContent.length > 0){
+    if(isEraseEnabled == true){
 
     lastOperandUsed = lastOperandUsed.slice(0,lastOperandUsed.length -1);
     displayReferenceNumber.textContent = displayReferenceNumber
@@ -56,6 +56,8 @@ function deleteSum(){
                                         .textContent
                                         .slice(0,displayReferenceLog
                                             .textContent.length -1);
+    }else{
+        return;
     }
 }
 
@@ -71,7 +73,6 @@ function clearSum(){
 };
 
 function resetCalculator(){
-    alert("Reseting calculator...");
     clearSum();
 }
 
@@ -92,6 +93,7 @@ function populateDisplayOnOperandError(){
 function populateDisplayOnNumber (event){
     displayReferenceNumber.textContent = lastOperandUsed;
     displayReferenceLog.textContent += event.target.textContent;
+    isEraseEnabled = true;
 }
 
 function populateDisplayOnFirstOperation (event){
@@ -187,6 +189,7 @@ function addListenerOperationButton(){
                 totalValue = operate(storedOperator,operand1,operand2);
                 lastOperandUsed = "";
                 storeOperatorandPopulateDisplay(event,populateDisplayOnOperation);
+                isEraseEnabled = false;
             }; 
         });
     });
@@ -212,6 +215,7 @@ let lastOperandUsed = "";
 let storedOperator;
 let storedOperator2;
 let totalValue = 0;
+let isEraseEnabled = false;
 
 
 addListenerNumberButton();
