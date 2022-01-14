@@ -1,205 +1,3 @@
-function add(operand1,operand2){
-    return (+operand1) + (+operand2);
-}
-
-function substract(operand1,operand2){
-    return (+operand1) - (+operand2);
-}
-
-function multiply(operand1,operand2){
-    return (+operand1) * (+operand2);
-}
-
-function divide(operand1,operand2){
-    let isZeroDivision = operand1 === "0" || operand2 === "0";
-
-    if(isZeroDivision){
-        setTimeout(populateDisplayOnDivisionError,200);
-        setTimeout(resetCalculator,1000);
-        return;
-    }
-    else
-    {
-        return (+operand1) / (+operand2); 
-    }
-}
-
-function percentage(operand1,operand2){
-    return (operand1 * operand2) / 100;
-}
-
-function operate(operator,operand1,operand2) {
-    const OPERATION_FUNCTIONS = {
-        "+" : add,
-        "-" : substract,
-        "*" : multiply,
-        "/" : divide,
-        "%" : percentage,
-    }
-    operator = OPERATION_FUNCTIONS[operator];
-    return operator(operand1,operand2);
-}
-
-function clearDisplay(){
-    displayReferenceNumber.textContent = "";
-}
-
-function deleteSum(){
-    if(isEraseEnabled == true){
-
-    lastOperandUsed = lastOperandUsed.slice(0,lastOperandUsed.length -1);
-    displayReferenceNumber.textContent = displayReferenceNumber
-                                        .textContent
-                                        .slice(0,displayReferenceNumber
-                                        .textContent.length -1);
-    displayReferenceLog.textContent = displayReferenceLog
-                                        .textContent
-                                        .slice(0,displayReferenceLog
-                                            .textContent.length -1);
-    }else{
-        return;
-    }
-}
-
-function clearSum(){
-    displayReferenceNumber.textContent = '';
-    displayReferenceLog.textContent = '';
-    displayReferenceOperation.textContent = '';
-    operand1 = undefined;
-    operand2 = undefined;
-    lastOperandUsed = "";
-    storedOperator = "";
-    totalValue = 0;
-};
-
-function resetCalculator(){
-    clearSum();
-}
-
-function numberAlreadyHasDecimalPoint(event){
-    return event.target.textContent == "." && displayReferenceNumber.textContent.includes(".") ? true : false;
-}
-
-function populateDisplayOnDivisionError(){
-    displayReferenceOperation.textContent = "";
-    displayReferenceNumber.textContent = "ERROR: Division by 0";
-}
-
-function populateDisplayOnOperandError(){
-    displayReferenceOperation.textContent = "";
-    displayReferenceNumber.textContent = "ERROR: Invalid operands";
-}
-
-function populateDisplayOnNumber (event){
-    displayReferenceNumber.textContent = lastOperandUsed;
-    displayReferenceLog.textContent += event.target.textContent;
-    isEraseEnabled = true;
-}
-
-function populateDisplayOnFirstOperation (event){
-        displayReferenceLog.textContent += event.target.textContent;
-        displayReferenceOperation.textContent = event.target.textContent;
-}
-
-function populateDisplayOnOperation (event){
-    try{
-        displayReferenceNumber.textContent = totalValue.toFixed(2).replace(/[.,]00$/, ""); 
-        if(event.target.textContent == "="){
-            displayReferenceOperation.textContent = "";
-            return;
-        }
-        displayReferenceOperation.textContent = event.target.textContent;
-        displayReferenceLog.textContent += event.target.textContent;
-    }catch(e){
-        return;
-    }
-    
-}
-
-function populateDisplayOnEquals (){
-    displayReferenceNumber.textContent = totalValue;
-    displayReferenceOperation.textContent = "";
-}
-
-function storeOperatorandPopulateDisplay(event,populateDisplayFunction){
-    storedOperator = event.target.textContent;
-    populateDisplayFunction(event);
-}
-
-function addListenerDeleteButton(){
-    buttonReferenceDelete.addEventListener("click", () => {
-        deleteSum();
-    })
-}
-
-function addListenerClearButton(){
-    buttonReferenceClear.addEventListener("click", () => {
-        clearSum();
-    });
-};
-
-function addListenerNumberButton(){ 
-    buttonReferenceNumNodeList.forEach(button => {
-        button.addEventListener("click", (event) => {
-            if(numberAlreadyHasDecimalPoint(event)){
-                return;
-            }
-            lastOperandUsed += event.target.textContent;
-            populateDisplayOnNumber(event);
-        });
-    });
-};
-
-function addListenerOperationButton(){ 
-    buttonReferenceOpNodeList.forEach(button =>{
-        button.addEventListener("click", (event) => {
-            
-            let isFirstOperation = totalValue === 0;
-            let isOperationWithNoOperands = lastOperandUsed === "";
-            let isOperationAfterEquals = storedOperator === "=";
-            let isOperationOfNan = operand1 === "." || operand2 === "." || lastOperandUsed === ".";
-            clearDisplay();
-            
-            if(isOperationWithNoOperands){
-                if(isOperationAfterEquals){
-                    storeOperatorandPopulateDisplay(event,populateDisplayOnOperation);
-                    return;
-                }
-                return;
-            } 
-            else if(isFirstOperation){ 
-                if(isOperationOfNan){
-                    setTimeout(populateDisplayOnOperandError,200);
-                    setTimeout(resetCalculator,1000);
-                    return;
-                }   
-                totalValue = lastOperandUsed;
-                lastOperandUsed = "";
-                storeOperatorandPopulateDisplay(event,populateDisplayOnFirstOperation)
-                return;
-            }
-            else{
-                operand1 = totalValue;
-                operand2 = lastOperandUsed;
-                if(isOperationOfNan){
-                    setTimeout(populateDisplayOnOperandError,200);
-                    setTimeout(resetCalculator,1000);
-                    return;
-                }   
-                totalValue = operate(storedOperator,operand1,operand2);
-                lastOperandUsed = "";
-                storeOperatorandPopulateDisplay(event,populateDisplayOnOperation);
-                isEraseEnabled = false;
-            }; 
-        });
-    });
-};
-
-function playSound() {
-    var sound = document.getElementById("audio");
-    sound.play();
-}
-
 const buttonReferenceNumNodeList = document.querySelectorAll(".num-button");
 const buttonReferenceOpNodeList = document.querySelectorAll(".op-button");
 const buttonReferenceClear = document.querySelector(".clear-button");
@@ -217,8 +15,223 @@ let storedOperator2;
 let totalValue = 0;
 let isEraseEnabled = false;
 
-
 addListenerNumberButton();
 addListenerClearButton();
 addListenerDeleteButton();
 addListenerOperationButton();
+
+function add(operand1,operand2){
+    return (+operand1) + (+operand2);
+};
+
+function substract(operand1,operand2){
+    return (+operand1) - (+operand2);
+};
+
+function multiply(operand1,operand2){
+    return (+operand1) * (+operand2);
+};
+
+function divide(operand1,operand2){
+    let isZeroDivision = operand1 === "0" || operand2 === "0";
+
+    if(isZeroDivision){
+        setTimeout(populateDisplayOnDivisionError,200);
+        setTimeout(resetCalculator,1000);
+        return;
+    }
+    else
+    {
+        return (+operand1) / (+operand2); 
+    }
+};
+
+function percentage(operand1,operand2){
+    return (operand1 * operand2) / 100;
+};
+
+function operate(operator,operand1,operand2) {
+    const OPERATION_FUNCTIONS = {
+        "+" : add,
+        "-" : substract,
+        "*" : multiply,
+        "/" : divide,
+        "%" : percentage,
+    }
+    operator = OPERATION_FUNCTIONS[operator];
+    return operator(operand1,operand2);
+};
+
+function clearDisplay(){
+    displayReferenceNumber.textContent = "";
+};
+
+function deleteSum(){
+    if(isEraseEnabled == true){
+
+    lastOperandUsed = lastOperandUsed.slice(0,lastOperandUsed.length -1);
+    displayReferenceNumber.textContent = displayReferenceNumber
+                                        .textContent
+                                        .slice(0,displayReferenceNumber
+                                        .textContent.length -1);
+    displayReferenceLog.textContent = displayReferenceLog
+                                        .textContent
+                                        .slice(0,displayReferenceLog
+                                            .textContent.length -1);
+    }else{
+        return;
+    }
+};
+
+function clearSum(){
+    displayReferenceNumber.textContent = '';
+    displayReferenceLog.textContent = '';
+    displayReferenceOperation.textContent = '';
+    operand1 = undefined;
+    operand2 = undefined;
+    lastOperandUsed = "";
+    storedOperator = "";
+    totalValue = 0;
+};
+
+function resetCalculator(){
+    clearSum();
+};
+
+function populateDisplayOnDivisionError(){
+    displayReferenceOperation.textContent = "";
+    displayReferenceNumber.textContent = "ERROR: Division by 0";
+};
+
+function populateDisplayOnOperandError(){
+    displayReferenceOperation.textContent = "";
+    displayReferenceNumber.textContent = "ERROR: Invalid operands";
+};
+
+function displayErrorAndReset(){
+    setTimeout(populateDisplayOnOperandError,200);
+    setTimeout(resetCalculator,1000);
+    return;
+};
+
+function populateDisplayOnNumber (event){
+    displayReferenceNumber.textContent = lastOperandUsed;
+    displayReferenceLog.textContent += event.target.textContent;
+    isEraseEnabled = true;
+};
+
+function populateDisplayOnFirstOperation (event){
+        displayReferenceLog.textContent += event.target.textContent;
+        displayReferenceOperation.textContent = event.target.textContent;
+};
+
+function populateDisplayOnOperation (event){
+    try{
+        displayReferenceNumber.textContent = totalValue.toFixed(2).replace(/[.,]00$/, ""); 
+        if(event.target.textContent == "="){
+            displayReferenceOperation.textContent = "";
+            return;
+        }
+        displayReferenceOperation.textContent = event.target.textContent;
+        displayReferenceLog.textContent += event.target.textContent;
+    }catch(e){
+        return;
+    }
+    
+};
+
+function populateDisplayOnEquals (){
+    displayReferenceNumber.textContent = totalValue;
+    displayReferenceOperation.textContent = "";
+};
+
+function storeOperatorandPopulateDisplay(event,populateDisplayFunction){
+    storedOperator = event.target.textContent;
+    populateDisplayFunction(event);
+};
+
+function addListenerDeleteButton(){
+    buttonReferenceDelete.addEventListener("click", () => {
+        deleteSum();
+    })
+};
+
+function addListenerClearButton(){
+    buttonReferenceClear.addEventListener("click", () => {
+        clearSum();
+    });
+};
+
+function setUpNumber(event){
+    let hasOperandDecimalPoint = event.target.textContent == "." && displayReferenceNumber.textContent.includes(".");
+
+    if(hasOperandDecimalPoint){
+        return;
+    }
+    lastOperandUsed += event.target.textContent;
+    populateDisplayOnNumber(event);
+};
+
+function addListenerNumberButton(){ 
+    buttonReferenceNumNodeList.forEach(button => {
+        button.addEventListener("click", (event) => {
+        setUpNumber(event);
+        });
+    });
+};
+
+function setUpOperation(event){
+
+    let isFirstOperation = totalValue === 0;
+    let isOperationWithNoOperands = lastOperandUsed === "";
+    let isOperationAfterEquals = storedOperator === "=";
+    let isOperationOfNan = operand1 === "." || operand2 === "." || lastOperandUsed === ".";
+
+    if(isOperationWithNoOperands){
+        if(isOperationAfterEquals){
+            storeOperatorandPopulateDisplay(event,populateDisplayOnOperation);
+            return;
+        }
+        return;
+    } 
+    else if(isFirstOperation){ 
+        if(isOperationOfNan){
+            displayErrorAndReset();
+            return;
+        }   
+        totalValue = lastOperandUsed;
+        lastOperandUsed = "";
+        isEraseEnabled = false;
+        storeOperatorandPopulateDisplay(event,populateDisplayOnFirstOperation)
+        return;
+    }
+    else{
+        operand1 = totalValue;
+        operand2 = lastOperandUsed;
+        if(isOperationOfNan){
+            displayErrorAndReset();
+            return;
+        }   
+        totalValue = operate(storedOperator,operand1,operand2);
+        lastOperandUsed = "";
+        isEraseEnabled = false;
+        storeOperatorandPopulateDisplay(event,populateDisplayOnOperation);
+        
+    };
+}
+
+function addListenerOperationButton(){ 
+    buttonReferenceOpNodeList.forEach(button =>{
+        button.addEventListener("click", (event) => {
+            clearDisplay();
+            setUpOperation(event);
+        });
+    });
+};
+
+function playSound() {
+    var sound = document.getElementById("audio");
+    sound.play();
+};
+
+
