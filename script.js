@@ -41,7 +41,7 @@ function divide(operand1,operand2){
 
     if(isZeroDivision){
         setTimeout(populateDisplayOnDivisionError,200);
-        setTimeout(resetCalculator,1000);
+        setTimeout(resetCalculator,998);
         return;
     }
     else
